@@ -1,59 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #4CAF50;
-            color: white;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-    <script>document.location.href="https://linktr.ee/ntutcppc";</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <script>
+    function getParameterByName(name) {
+      const url = window.location.href;
+      const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+      const results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    const member = getParameterByName('member');
+    if (member) {
+      const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSei8krld243H0HaAzum5BDioiM-vrg9S5JSdYSRbIlWASV5WQ/viewform?usp=pp_url&entry.1710489807=${member}`;
+      window.location.href = googleFormUrl;
+    } else {
+      window.location.href = "https://linktr.ee/ntutcppc";
+    }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My GitHub Pages Site</h1>
-    </header>
-    
-    <div class="container">
-        <h2>About This Page</h2>
-        <p>This is a placeholder page for my GitHub Pages site. I'll be adding more content soon.</p>
-        <p>Stay tuned!</p>
-        
-        <!-- Subtle Rickroll link -->
-        <p>For more information, check out <a href="https://www.instagram.com/ntut_photoclub/" class="hidden-link">this link</a>.</p>
-    </div>
-    
-    <footer>
-        <p>&copy; 2024 My GitHub Pages Site</p>
-    </footer>
+  <p>Redirecting...</p>
 </body>
 </html>
