@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redirecting...</title>
   <script>
+    // 解析 URL 參數
     function getParameterByName(name) {
       const url = window.location.href;
       const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
@@ -14,13 +15,43 @@
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    const member = getParameterByName('member');
-    if (member) {
-      const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSei8krld243H0HaAzum5BDioiM-vrg9S5JSdYSRbIlWASV5WQ/viewform?usp=pp_url&entry.1710489807=${member}`;
-      window.location.href = googleFormUrl;
-    } else {
-      window.location.href = "https://linktr.ee/ntutcppc";
+    // 檢查 CSV 檔案中的已填表單編號
+    async function checkMemberInCSV(member) {
+      const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTgQsr7gOGKYcx2IoW6HQD4r59v2HCTXLdaVf__UO4loT2REsDSBBH-MXtGZkyhu3N9nvEWRF98QcvJ/pub?gid=1510205247&single=true&output=csv';
+      try {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        const rows = data.split('\n').map(row => row.trim());
+        
+        // 檢查 member 是否存在於 CSV
+        return rows.includes(member);
+      } catch (error) {
+        console.error('Error fetching or parsing CSV:', error);
+        return false; // 若發生錯誤，假設編號不存在
+      }
     }
+
+    // 執行邏輯
+    async function redirectBasedOnMember() {
+      const member = getParameterByName('member');
+      if (member) {
+        const existsInCSV = await checkMemberInCSV(member);
+        if (existsInCSV) {
+          // 如果編號已經存在於 CSV 中，重導向到 linktr.ee
+          window.location.href = "https://linktr.ee/ntutcppc";
+        } else {
+          // 如果編號不存在，導向到 Google 表單
+          const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSei8krld243H0HaAzum5BDioiM-vrg9S5JSdYSRbIlWASV5WQ/viewform?usp=pp_url&entry.1710489807=${member}`;
+          window.location.href = googleFormUrl;
+        }
+      } else {
+        // 如果沒有 member 參數，則導向到 linktr.ee
+        window.location.href = "https://linktr.ee/ntutcppc";
+      }
+    }
+
+    // 執行
+    redirectBasedOnMember();
   </script>
 </head>
 <body>
